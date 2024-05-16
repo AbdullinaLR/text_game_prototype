@@ -1,0 +1,70 @@
+/* Основные стили для всей страницы */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* Белый фон */
+    color: #000000; /* Черный текст */
+    margin: 0;
+    padding: 0;
+}
+
+/* Стили для контейнера страницы */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Стили для заголовков */
+h1, h2, h3 {
+    text-align: center;
+    color: #000000; /* Черный текст */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Стили для параграфов */
+p {
+    font-size: 1.1em;
+    line-height: 1.5em;
+    margin: 10px 0;
+    color: #000000; /* Черный текст */
+}
+
+/* Стили для списка персонажей */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 10px; /* Отступ снизу */
+    border-radius: 5px;
+    background-color: #f9f9f9; /* Цвет фона */
+    padding: 10px; /* Добавлен отступ для кнопок */
+    position: relative; /* Позиционирование для кнопок */
+}
+
+/* Стили для кнопок удаления персонажа */
+.delete-button {
+    background-color: #ff0000; /* Красный цвет */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: absolute; /* Абсолютное позиционирование */
+    top: 50%; /* Положение по вертикали */
+    right: 10px; /* Положение по горизонтали */
+    transform: translateY(-50%); /* Сдвиг вверх на половину высоты кнопки */
+}
+
+.delete-button:hover {
+    background-color: #cc0000; /* Темно-красный цвет */
+}
+
+/* Стили для формы */
+form {
+    display: inline;
+}
