@@ -5,15 +5,22 @@ body {
     color: #000000; /* Черный текст */
     margin: 0;
     padding: 0;
+    background-image: url('images/bread_trans.png');
+    background-repeat: repeat; /* Повторять изображение по горизонтали и вертикали */
 }
 
-/* Стили для контейнера страницы */
+/* Стили для рамок и фона внутри */
 .container {
-    width: 80%;
-    margin: 0 auto;
+    border: 2px solid #FFD700; /* Оранжево-желтая рамка */
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px; /* Закругление углов рамки */
+    background-color: #FFD700; /* Оранжево-желтый фон */
+}
+
+/* Стили для текста внутри рамок */
+.container p {
+    font-weight: bold; /* Установка текста жирным */
+    color: #FFF; /* Цвет текста белый */
 }
 
 /* Стили для заголовков */
@@ -35,15 +42,26 @@ p {
 ul {
     list-style-type: none;
     padding: 0;
+    text-align: center; /* Центрируем содержимое */
+    margin-left: auto; /* Автоматический отступ слева */
+    margin-right: auto; /* Автоматический отступ справа */
+    max-width: 400px; /* Максимальная ширина списка */
 }
 
+/* Стили для элементов списка персонажей */
 ul li {
-    margin-bottom: 10px; /* Отступ снизу */
+    background: rgba(255, 255, 255, 0.1);
+    margin: 5px auto; /* Верхний и нижний отступ, горизонтальные отступы автоматически центрируют */
+    padding: 10px;
     border-radius: 5px;
-    background-color: #f9f9f9; /* Цвет фона */
-    padding: 10px; /* Добавлен отступ для кнопок */
-    position: relative; /* Позиционирование для кнопок */
+    border: 1px solid #ccc; /* Добавляем рамку */
+    display: block; /* Блочный элемент, чтобы расположить их в столбик */
+    width: 90%; /* Ширина элемента */
+    text-align: left; /* Выравнивание текста влево */
+    font-size: 18px; /* Увеличение размера текста */
 }
+
+
 
 /* Стили для кнопок удаления персонажа */
 .delete-button {
@@ -68,3 +86,27 @@ ul li {
 form {
     display: inline;
 }
+/* Стили для ссылки */
+a {
+    display: block; /* Превратить ссылку в блочный элемент */
+    text-align: center; /* Выравнивание текста по центру */
+    font-size: 20px; /* Установка размера текста */
+    padding: 10px; /* Добавление отступов для увеличения области клика */
+}
+/* Стили для контейнера текста */
+.text-container {
+    width: 600px; /* Фиксированная ширина контейнера */
+    max-height: 300px; /* Максимальная высота контейнера */
+    overflow-y: auto; /* Включение вертикальной прокрутки при необходимости */
+    border: 2px solid #FFD700; /* Оранжево-желтая рамка */
+    padding: 20px;
+    border-radius: 10px; /* Закругление углов рамки */
+    background-color: #FFD700; /* Оранжево-желтый фон */
+    text-align: center; /* Выравнивание текста по центру */
+}
+/* Стили для элементов с характеристиками */
+.character-info {
+    text-align: center; /* Выравнивание текста по центру */
+}
+
+

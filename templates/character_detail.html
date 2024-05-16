@@ -2,21 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Character Detail</title>
+    <title>Характеристики героя</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
 
+{#    <style>#}
+{#        #story {#}
+{#            white-space: nowrap;#}
+{#            overflow: hidden;#}
+{#            display: inline-block;#}
+{#            animation: typing 3s steps(40, end) forwards;#}
+{#        }#}
+{#        @keyframes typing {#}
+{#            from { width: 0; }#}
+{#            to { width: 100%; }#}
+{#        }#}
+{#    </style>#}
     <style>
         #story {
-            white-space: nowrap;
-            overflow: hidden;
-            display: inline-block;
-            animation: typing 3s steps(40, end) forwards;
-        }
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
+    text-align: center; /* Выравнивание текста по центру */
+    padding: 20px; /* Отступы вокруг текста */
+    display: inline-block; /* Отображение текста как блока */
+    animation: typing 3s steps(40, end) forwards;
+    max-width: 80%; /* Максимальная ширина текста */
+    margin: 0 auto; /* Центрирование текста по горизонтали */
+}
     </style>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,20 +39,20 @@
 </head>
 <body>
     <h1>{{ character.name }}</h1>
-    <p>Strength: {{ character.strength }}</p>
-    <p>Agility: {{ character.agility }}</p>
-    <p>Endurance: {{ character.endurance }}</p>
+    <p class="character-info">Сила: {{ character.strength }}</p>
+    <p class="character-info">Ловкость: {{ character.agility }}</>
+    <p class="character-info">Выносливость: {{ character.endurance }}</>
 
     <div id="story">{{ character.story }}</div>
     <div id="enemy" style="display: none;">
-        <p>Enemy Health: <span id="enemy_health"></span></p>
-        <button type="button" onclick="attack()">Attack</button>
+        <p>Здоровье врага: <span id="enemy_health"></span></p>
+        <button type="button" onclick="attack()">В атаку!</button>
     </div>
     <form action="{{ url_for('index') }}" method="get">
-        <button type="submit">Back to Character List</button>
+        <button type="submit">Вернуться к списку героев</button>
     </form>
     <form id="continueForm" action="{{ url_for('continue_story', character_id=character.id) }}" method="post">
-        <button type="button" id="continueButton" onclick="continueStory()">Continue Story</button>
+        <button type="button" id="continueButton" onclick="continueStory()">Продолжить историю</button>
     </form>
     <script>
         function continueStory() {
@@ -78,7 +90,7 @@
         }
     </script>
     <p> {{ character.story }}</p>
-    <a href="{{ url_for('index') }}">Back to Character List</a>
+    <a href="{{ url_for('index') }}">Вернуться к списку героев</a>
 
 </body>
 </html>

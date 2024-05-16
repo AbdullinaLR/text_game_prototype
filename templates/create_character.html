@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Character</title>
+    <title>Создай своего героя!</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
 
 </head>
 <body>
-    <h1>Create Character</h1>
+    <h1>Создание героя</h1>
     <form method="POST">
         {{ form.hidden_tag() }}
         <p>
@@ -26,8 +26,8 @@
             {{ form.endurance.label }}<br>
             {{ form.endurance() }}
         </p>
-        <p><input type="submit" value="Create Character"></p>
+        <p><input type="submit" value="Создай своего героя!"></p>
     </form>
-    <a href="{{ url_for('index') }}">Back to Character List</a>
+    <a href="{{ url_for('index') }}">Вернуться к списку героев</a>
 </body>
 </html>
