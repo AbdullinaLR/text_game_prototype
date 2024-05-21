@@ -2,71 +2,35 @@
 {#<html lang="en">#}
 {#<head>#}
 {#    <meta charset="UTF-8">#}
-{#    <title>Character List</title>#}
+{#    <title>Список героев</title>#}
+{#    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">#}
+{##}
 {#</head>#}
 {#<body>#}
-{#    <h1>Character List</h1>#}
+{#    <h1>Список Героев</h1>#}
 {#    <ul>#}
 {#        {% for character in characters %}#}
 {#            <li>#}
 {#                <a href="{{ url_for('character_detail', character_id=character.id) }}">{{ character.name }}</a>#}
 {#                <form action="{{ url_for('delete_character', character_id=character.id) }}" method="post" style="display:inline;">#}
-{#                    <button type="submit">Delete</button>#}
+{#                    <button type="submit">Удалить</button>#}
 {#                </form>#}
 {#                <form action="{{ url_for('start_game', character_id=character.id) }}" method="post" style="display:inline;">#}
-{#                    <button type="submit">Start Game</button>#}
+{#                    <button type="submit">Начать игру</button>#}
 {#                </form>#}
 {#            </li>#}
 {#        {% endfor %}#}
 {#    </ul>#}
-{#    <a href="{{ url_for('create_character') }}">Create New Character</a>#}
-{#=======#}
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <title>Title</title>#}
-{#</head>#}
-{#<body>#}
-{##}
+{#    <a href="{{ url_for('create_character') }}">Создай своего героя!</a>#}
 {#</body>#}
 {#</html>#}
-{##}
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
-{#    <title>Text Game</title>#}
-{#    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">#}
-{#</head>#}
-{#<body>#}
-{#    <h1>Create a Character</h1>#}
-{#    <form method="POST" action="{{ url_for('create_character') }}">#}
-{#        {{ form.hidden_tag() }}#}
-{#        <p>#}
-{#            {{ form.name.label }}<br>#}
-{#            {{ form.name(size=32) }}#}
-{#        </p>#}
-{#        <p>#}
-{#            {{ form.strength.label }}<br>#}
-{#            {{ form.strength() }}#}
-{#        </p>#}
-{#        <p>#}
-{#            {{ form.agility.label }}<br>#}
-{#            {{ form.agility() }}#}
-{#        </p>#}
-{#        <p><input type="submit" value="Create Character"></p>#}
-{#    </form>#}
-{#</body>#}
-{#</html>#}
+
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Список героев</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
-
 </head>
 <body>
     <h1>Список Героев</h1>

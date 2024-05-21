@@ -108,5 +108,32 @@ a {
 .character-info {
     text-align: center; /* Выравнивание текста по центру */
 }
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.buttons-container {
+    margin-top: 20px;
+}
+
+.buttons-container form {
+    display: inline;
+}
+
+.buttons-container button {
+    margin: 5px;
+}
+
+#story {
+    text-align: center;
+    padding: 20px;
+    display: inline-block;
+    animation: typing 3s steps(40, end) forwards;
+    max-width: 80%;
+    margin: 0 auto;
+}
 
 

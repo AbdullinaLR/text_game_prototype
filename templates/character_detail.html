@@ -17,80 +17,126 @@
 {#            to { width: 100%; }#}
 {#        }#}
 {#    </style>#}
-    <style>
-        #story {
-    text-align: center; /* Выравнивание текста по центру */
-    padding: 20px; /* Отступы вокруг текста */
-    display: inline-block; /* Отображение текста как блока */
-    animation: typing 3s steps(40, end) forwards;
-    max-width: 80%; /* Максимальная ширина текста */
-    margin: 0 auto; /* Центрирование текста по горизонтали */
-}
-    </style>
+{#    <style>#}
+{#        #story {#}
+{#    text-align: center; /* Выравнивание текста по центру */#}
+{#    padding: 20px; /* Отступы вокруг текста */#}
+{#    display: inline-block; /* Отображение текста как блока */#}
+{#    animation: typing 3s steps(40, end) forwards;#}
+{#    max-width: 80%; /* Максимальная ширина текста */#}
+{#    margin: 0 auto; /* Центрирование текста по горизонтали */#}
+{# }#}
+{#    </style>#}
 
 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ character.name }}</title>
-
+{##}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>{{ character.name }}</title>#}
+{##}
 </head>
 <body>
     <h1>{{ character.name }}</h1>
     <p class="character-info">Сила: {{ character.strength }}</p>
-    <p class="character-info">Ловкость: {{ character.agility }}</>
-    <p class="character-info">Выносливость: {{ character.endurance }}</>
+    <p class="character-info">Ловкость: {{ character.agility }}</p>
+    <p class="character-info">Выносливость: {{ character.endurance }}</p>
 
     <div id="story">{{ character.story }}</div>
     <div id="enemy" style="display: none;">
         <p>Здоровье врага: <span id="enemy_health"></span></p>
         <button type="button" onclick="attack()">В атаку!</button>
     </div>
-    <form action="{{ url_for('index') }}" method="get">
-        <button type="submit">Вернуться к списку героев</button>
-    </form>
+
+    <div class="buttons-container">
+{#    <form action="{{ url_for('index') }}" method="get">#}
+{#        <button type="submit">Вернуться к списку героев</button>#}
+{#    </form>#}
     <form id="continueForm" action="{{ url_for('continue_story', character_id=character.id) }}" method="post">
         <button type="button" id="continueButton" onclick="continueStory()">Продолжить историю</button>
     </form>
-    <script>
-        function continueStory() {
-            fetch('{{ url_for("continue_story", character_id=character.id) }}', {
-                method: 'POST',
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('story').innerText = data.story;
-                if (data.enemy_health !== null) {
-                    document.getElementById('enemy').style.display = 'block';
-                    document.getElementById('enemy_health').innerText = data.enemy_health;
-                    document.getElementById('continueButton').style.display = 'none';
-                } else {
-                    document.getElementById('enemy').style.display = 'none';
-                    document.getElementById('continueButton').style.display = 'block';
-                }
-            });
-        }
+    </div>
+{#    <script>#}
+{#        function continueStory() {#}
+{#            fetch('{{ url_for("continue_story", character_id=character.id) }}', {#}
+{#                method: 'POST',#}
+{#            })#}
+{#            .then(response => response.json())#}
+{#            .then(data => {#}
+{#                document.getElementById('story').innerText = data.story;#}
+{#                if (data.enemy_health !== null) {#}
+{#                    document.getElementById('enemy').style.display = 'block';#}
+{#                    document.getElementById('enemy_health').innerText = data.enemy_health;#}
+{#                    document.getElementById('continueButton').style.display = 'none';#}
+{#                } else {#}
+{#                    document.getElementById('enemy').style.display = 'none';#}
+{#                    document.getElementById('continueButton').style.display = 'block';#}
+{#                }#}
+{#            });#}
+{#        }#}
+{##}
+{#        function attack() {#}
+{#            fetch('{{ url_for("attack", character_id=character.id) }}', {#}
+{#                method: 'POST',#}
+{#            })#}
+{#            .then(response => response.json())#}
+{#            .then(data => {#}
+{#                if (data.message === "Enemy defeated") {#}
+{#                    document.getElementById('story').innerText = data.story + "\nВраг побежден...";#}
+{#                    document.getElementById('enemy').style.display = 'none';#}
+{#                    document.getElementById('continueButton').style.display = 'block';#}
+{#                } else {#}
+{#                    document.getElementById('enemy_health').innerText = data.enemy_health;#}
+{#                }#}
+{#            });#}
+{#        }#}
+{#    </script>#}
 
-        function attack() {
-            fetch('{{ url_for("attack", character_id=character.id) }}', {
-                method: 'POST',
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message === "Enemy defeated") {
-                    document.getElementById('story').innerText = data.story + "\nВраг побежден...";
-                    document.getElementById('enemy').style.display = 'none';
-                    document.getElementById('continueButton').style.display = 'block';
-                } else {
-                    document.getElementById('enemy_health').innerText = data.enemy_health;
-                }
-            });
-        }
-    </script>
+    <script>
+    function continueStory() {
+        fetch('{{ url_for("continue_story", character_id=character.id) }}', {
+            method: 'POST',
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.story) {
+                document.getElementById('story').innerText = data.story;
+            }
+            if (data.enemy_health !== null) {
+                document.getElementById('enemy').style.display = 'block';
+                document.getElementById('enemy_health').innerText = data.enemy_health;
+                document.getElementById('continueButton').style.display = 'none';
+            } else {
+                document.getElementById('enemy').style.display = 'none';
+                document.getElementById('continueButton').style.display = 'block';
+            }
+        });
+    }
+
+    function attack() {
+        fetch('{{ url_for("attack", character_id=character.id) }}', {
+            method: 'POST',
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === "Enemy defeated") {
+                document.getElementById('story').innerText = data.story + "\nВраг побежден...";
+                document.getElementById('enemy').style.display = 'none';
+                document.getElementById('continueButton').style.display = 'block';
+            } else if (data.enemy_health !== null) {
+                document.getElementById('enemy_health').innerText = data.enemy_health;
+            } else {
+                document.getElementById('enemy').style.display = 'none';
+                document.getElementById('continueButton').style.display = 'block';
+            }
+        });
+    }
+</script>
     <p> {{ character.story }}</p>
     <a href="{{ url_for('index') }}">Вернуться к списку героев</a>
 
 </body>
 </html>
+
+
