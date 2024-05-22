@@ -22,7 +22,7 @@
 {#        <button type="submit">Вернуться к списку героев</button>#}
 {#    </form>#}
     <form id="continueForm" action="{{ url_for('continue_story', character_id=character.id) }}" method="post">
-        <button type="button" id="continueButton" onclick="continueStory()">Продолжить историю</button>
+        <button type="button" id="continueButton" onclick="continueStory()">Читать историю</button>
     </form>
     </div>
     <script>
@@ -58,6 +58,9 @@
                 document.getElementById('continueButton').style.display = 'block';
             } else if (data.enemy_health !== null) {
                 document.getElementById('enemy_health').innerText = data.enemy_health;
+                {#ДОБАВЛЕНО ДЛЯ ПРОСТО ВЫВОДА#}
+                document.getElementById('story').innerText = data.story;
+
             } else {
                 document.getElementById('enemy').style.display = 'none';
                 document.getElementById('continueButton').style.display = 'block';

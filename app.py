@@ -18,6 +18,20 @@ with app.app_context():
 
 story_paragraphs = []
 
+song_lines = [
+    "Я Колобок, Колобок!\n Я по коробу скребен, По сусеку метен",
+    "На сметане мешон, \n Да в масле пряжон,\n На окошке стужон;",
+    "Я от дедушки ушел, \n Я от бабушки ушел,\n И от тебя, зайца, не хитро уйти!"
+]
+
+
+# ГЕНЕРАТОР СТРОК
+def song_generator(song_lines, total_attacks):
+    total_lines = len(song_lines)
+    lines_per_attack = total_lines // total_attacks
+    for i in range(0, total_lines, lines_per_attack):
+        yield '\n'.join(song_lines[i:i + lines_per_attack])
+
 
 def load_story_from_file(filepath):
     global story_paragraphs
@@ -38,7 +52,9 @@ def character_to_dict(character):
         'agility': character.agility,
         'endurance': character.endurance,
         'story_index': character.story_index,
-        'enemy_health': character.enemy_health
+        'enemy_health': character.enemy_health,
+        'song_index': character.song_index
+
     }
 
 
@@ -155,11 +171,15 @@ def start_game(character_id):
     character.story = ''  # Очищаем историю для нового начала
     character.story_index = 0  # Сбрасываем индекс истории
     character.enemy_health = None  # Сбрасываем здоровье врага
+    # ДОБАВЛЕНО ДЛЯ ПРОСТО ВЫВОДА
+
+    character.song_index = 0  # Сбрасываем индекс песни
     db.session.commit()
     return redirect(url_for('character_detail', character_id=character_id))
 
 
 # Определение маршрутов и ресурсов
+# ПРОСТОЕ
 @app.route('/character/<int:character_id>/continue_story', methods=['POST'])
 def continue_story(character_id):
     character = Character.query.get(character_id)
@@ -178,6 +198,51 @@ def continue_story(character_id):
     else:
         return jsonify({"message": "The story has ended"}), 200
 
+# ГЕНЕРАТОР
+# @app.route('/character/<int:character_id>/continue_story', methods=['POST'])
+# def continue_story(character_id):
+#     character = Character.query.get(character_id)
+#     if not character:
+#         return jsonify({"message": "Character not found"}), 404
+#
+#     if character.story_index < len(story_paragraphs):
+#         next_paragraph = story_paragraphs[character.story_index]
+#         character.story += f'\n\n{next_paragraph}'
+#         character.story_index += 1
+#
+#         if "*бой начинается*" in next_paragraph:
+#             character.enemy_health = 20
+#             character.attacks_needed = character.enemy_health // character.strength
+#             character.song_parts = character.generate_song(song_lines, character.attacks_needed)
+#             character.song_index = 0  # Сбрасываем индекс песни
+#         db.session.commit()
+#
+#         return jsonify({"story": character.story, "enemy_health": character.enemy_health}), 200
+#     else:
+#         return jsonify({"message": "The story has ended"}), 200
+
+
+
+
+# @app.route('/character/<int:character_id>/attack', methods=['POST'])
+# def attack(character_id):
+#     character = Character.query.get(character_id)
+#     if not character:
+#         return jsonify({"message": "Character not found"}), 404
+#
+#     if character.enemy_health is not None:
+#         character.enemy_health -= character.strength
+#         if character.enemy_health <= 0:
+#             character.enemy_health = None
+#             db.session.commit()
+#             return jsonify({"message": "Enemy defeated", "story": character.story}), 200
+#         db.session.commit()
+#         return jsonify({"enemy_health": character.enemy_health}), 200
+#     return jsonify({"message": "No enemy to attack"}), 400
+
+
+    # ДОБАВЛЕНО ДЛЯ ПРОСТО ВЫВОДА
+
 @app.route('/character/<int:character_id>/attack', methods=['POST'])
 def attack(character_id):
     character = Character.query.get(character_id)
@@ -189,10 +254,47 @@ def attack(character_id):
         if character.enemy_health <= 0:
             character.enemy_health = None
             db.session.commit()
+            print("Enemy defeated, returning story.")
             return jsonify({"message": "Enemy defeated", "story": character.story}), 200
-        db.session.commit()
-        return jsonify({"enemy_health": character.enemy_health}), 200
+        else:
+            # Добавление строки из песни
+            if character.song_index < len(song_lines):
+                character.story += f'\n{song_lines[character.song_index]}'
+                character.song_index += 1
+            db.session.commit()
+            print(f"Updated enemy health: {character.enemy_health}")
+            print(f"Updated story: {character.story}")
+            return jsonify({"enemy_health": character.enemy_health, "story": character.story}), 200
     return jsonify({"message": "No enemy to attack"}), 400
+
+# ГЕНЕРАТОРА ПЕСЕН
+# @app.route('/character/<int:character_id>/attack', methods=['POST'])
+# def attack(character_id):
+#     character = Character.query.get(character_id)
+#     if not character:
+#         return jsonify({"message": "Character not found"}), 404
+#
+#     # Устанавливаем здоровье врага только если его нет
+#     if character.enemy_health is None:
+#         character.enemy_health = 20
+#
+#     # Проверяем атаки только если есть здоровье врага
+#     if character.enemy_health is not None:
+#         character.enemy_health -= character.strength
+#
+#         if character.enemy_health <= 0:
+#             character.enemy_health = None
+#             db.session.commit()
+#             return jsonify({"message": "Enemy defeated", "story": character.story}), 200
+#         else:
+#             # Добавление строки из песни
+#             if character.song_index < len(character.song_parts):
+#                 song_part = character.song_parts[character.song_index]
+#                 character.song_index += 1
+#                 db.session.commit()
+#                 return jsonify({"enemy_health": character.enemy_health, "song_part": song_part}), 200
+#
+#     return jsonify({"message": "No enemy to attack"}), 400
 
 
 if __name__ == "__main__":
