@@ -4,38 +4,6 @@
     <meta charset="UTF-8">
     <title>Характеристики героя</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
-
-{#    <style>#}
-{#        #story {#}
-{#            white-space: nowrap;#}
-{#            overflow: hidden;#}
-{#            display: inline-block;#}
-{#            animation: typing 3s steps(40, end) forwards;#}
-{#        }#}
-{#        @keyframes typing {#}
-{#            from { width: 0; }#}
-{#            to { width: 100%; }#}
-{#        }#}
-{#    </style>#}
-{#    <style>#}
-{#        #story {#}
-{#    text-align: center; /* Выравнивание текста по центру */#}
-{#    padding: 20px; /* Отступы вокруг текста */#}
-{#    display: inline-block; /* Отображение текста как блока */#}
-{#    animation: typing 3s steps(40, end) forwards;#}
-{#    max-width: 80%; /* Максимальная ширина текста */#}
-{#    margin: 0 auto; /* Центрирование текста по горизонтали */#}
-{# }#}
-{#    </style>#}
-
-
-{##}
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <title>{{ character.name }}</title>#}
-{##}
 </head>
 <body>
     <h1>{{ character.name }}</h1>
@@ -57,42 +25,6 @@
         <button type="button" id="continueButton" onclick="continueStory()">Продолжить историю</button>
     </form>
     </div>
-{#    <script>#}
-{#        function continueStory() {#}
-{#            fetch('{{ url_for("continue_story", character_id=character.id) }}', {#}
-{#                method: 'POST',#}
-{#            })#}
-{#            .then(response => response.json())#}
-{#            .then(data => {#}
-{#                document.getElementById('story').innerText = data.story;#}
-{#                if (data.enemy_health !== null) {#}
-{#                    document.getElementById('enemy').style.display = 'block';#}
-{#                    document.getElementById('enemy_health').innerText = data.enemy_health;#}
-{#                    document.getElementById('continueButton').style.display = 'none';#}
-{#                } else {#}
-{#                    document.getElementById('enemy').style.display = 'none';#}
-{#                    document.getElementById('continueButton').style.display = 'block';#}
-{#                }#}
-{#            });#}
-{#        }#}
-{##}
-{#        function attack() {#}
-{#            fetch('{{ url_for("attack", character_id=character.id) }}', {#}
-{#                method: 'POST',#}
-{#            })#}
-{#            .then(response => response.json())#}
-{#            .then(data => {#}
-{#                if (data.message === "Enemy defeated") {#}
-{#                    document.getElementById('story').innerText = data.story + "\nВраг побежден...";#}
-{#                    document.getElementById('enemy').style.display = 'none';#}
-{#                    document.getElementById('continueButton').style.display = 'block';#}
-{#                } else {#}
-{#                    document.getElementById('enemy_health').innerText = data.enemy_health;#}
-{#                }#}
-{#            });#}
-{#        }#}
-{#    </script>#}
-
     <script>
     function continueStory() {
         fetch('{{ url_for("continue_story", character_id=character.id) }}', {
